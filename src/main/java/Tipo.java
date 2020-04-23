@@ -1,7 +1,11 @@
 public enum Tipo {
-    ZAPATO(Categoria.CALZADO),
     CAMISA(Categoria.SUPERIOR),
-    PANTALON(Categoria.INFERIOR);
+    REMERA(Categoria.SUPERIOR),
+    CAMPERA(Categoria.SUPERIOR),
+    CHOMBA(Categoria.SUPERIOR),
+    PANTALON(Categoria.INFERIOR),
+    ZAPATO(Categoria.CALZADO),
+    ZAPATILLAS(Categoria.CALZADO);
 
     private Categoria categoria;
 
