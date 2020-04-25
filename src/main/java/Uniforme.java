@@ -5,12 +5,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Uniforme {
-    private List<Prenda> prendas;
+    private Prenda prendaSuperior;
+    private Prenda prendaInferior;
+    private Prenda calzado;
     private static Set<Categoria> categoriasObligatorias = new HashSet<>(Arrays.asList(Categoria.SUPERIOR, Categoria.INFERIOR, Categoria.CALZADO));
 
-    public Uniforme(List<Prenda> prendas) {
-        this.prendas = prendas;
-        this.validarCategorias(prendas);
+    public Uniforme(Prenda prendaSuperior, Prenda prendaInferior, Prenda calzado) {
+        this.prendaSuperior = prendaSuperior;
+        this.prendaInferior = prendaInferior;
+        this.calzado = calzado;
+        this.validarCategorias(Arrays.asList(prendaSuperior, prendaInferior, calzado));
     }
 
     private void validarCategorias(List<Prenda> prendas) {
@@ -21,7 +25,15 @@ public class Uniforme {
         }
     }
 
-    public List<Prenda> getPrendas() {
-        return prendas;
+    public Prenda getPrendaSuperior() {
+        return prendaSuperior;
+    }
+
+    public Prenda getPrendaInferior() {
+        return prendaInferior;
+    }
+
+    public Prenda getCalzado() {
+        return calzado;
     }
 }

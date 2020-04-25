@@ -1,8 +1,6 @@
 import org.junit.Test;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import static org.junit.Assert.*;
 
 public class Tests {
@@ -78,10 +76,10 @@ public class Tests {
         prendaBuilderZapatos.setMaterial(materialZapatos);
         Prenda zapatos = prendaBuilderZapatos.build();
 
-        List<Prenda> prendas = Arrays.asList(camisa, pantalon, zapatos);
-
-        Uniforme uniforme = new Uniforme(prendas);
-        assertEquals(Arrays.asList(camisa, pantalon, zapatos), uniforme.getPrendas());
+        Uniforme uniforme = new Uniforme(camisa, pantalon, zapatos);
+        assertEquals(camisa, uniforme.getPrendaSuperior());
+        assertEquals(pantalon, uniforme.getPrendaInferior());
+        assertEquals(zapatos, uniforme.getCalzado());
     }
 
     @Test(expected = BuildUniformeException.class)
@@ -102,8 +100,6 @@ public class Tests {
         prendaBuilderPantalon.setMaterial(materialPantalon);
         Prenda pantalon = prendaBuilderPantalon.build();
 
-        List<Prenda> prendas = Arrays.asList(camisa, pantalon);
-
-        new Uniforme(prendas);
+        new Uniforme(camisa, camisa, pantalon);
     }
 }
