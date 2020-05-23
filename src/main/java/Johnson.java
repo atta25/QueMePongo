@@ -1,37 +1,31 @@
 import java.awt.*;
 import java.util.Collections;
 
-public class Johnson extends Institucion {
+public class Johnson extends Institute {
     @Override
-    protected Prenda getPrendaSuperior() {
-        PrendaBuilder prendaBuilderCamisa = new PrendaBuilder();
-        prendaBuilderCamisa.setTipo(Tipo.CAMISA);
-        Material materialCamisa = new Material();
-        materialCamisa.setColores(Collections.singletonList(Color.WHITE));
-        materialCamisa.setTela(Tela.ALGODON);
-        prendaBuilderCamisa.setMaterial(materialCamisa);
-        return prendaBuilderCamisa.build();
+    protected Garment getUpperGarment() {
+        GarmentBuilder builder = new GarmentBuilder();
+        Material material = new Material();
+        material.setColors(Collections.singletonList(Color.WHITE));
+        material.setCloth(Cloth.COTTON);
+        return builder.setType(Type.SHIRT).setMaterial(material).build();
     }
 
     @Override
-    protected Prenda getPrendaInferior() {
-        PrendaBuilder prendaBuilderPantalon = new PrendaBuilder();
-        prendaBuilderPantalon.setTipo(Tipo.PANTALON);
-        Material materialPantalon = new Material();
-        materialPantalon.setColores(Collections.singletonList(Color.BLACK));
-        materialPantalon.setTela(Tela.SEDA);
-        prendaBuilderPantalon.setMaterial(materialPantalon);
-        return prendaBuilderPantalon.build();
+    protected Garment getLowerGarment() {
+        GarmentBuilder builder = new GarmentBuilder();
+        Material material = new Material();
+        material.setColors(Collections.singletonList(Color.BLACK));
+        material.setCloth(Cloth.SILK);
+        return builder.setType(Type.TROUSER).setMaterial(material).build();
     }
 
     @Override
-    protected Prenda getCalzado() {
-        PrendaBuilder prendaBuilderZapatos = new PrendaBuilder();
-        prendaBuilderZapatos.setTipo(Tipo.ZAPATO);
-        Material materialZapatos = new Material();
-        materialZapatos.setColores(Collections.singletonList(Color.BLACK));
-        materialZapatos.setTela(Tela.CUERO);
-        prendaBuilderZapatos.setMaterial(materialZapatos);
-        return prendaBuilderZapatos.build();
+    protected Garment getFootwear() {
+        GarmentBuilder builder = new GarmentBuilder();
+        Material material = new Material();
+        material.setColors(Collections.singletonList(Color.BLACK));
+        material.setCloth(Cloth.LEATHER);
+        return builder.setType(Type.SHOE).setMaterial(material).build();
     }
 }

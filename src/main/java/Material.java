@@ -2,39 +2,39 @@ import java.util.List;
 import java.awt.*;
 
 public class Material {
-    private List<Color> colores;
-    private Tela tela;
-    private Trama trama;
+    private List<Color> colors;
+    private Cloth cloth;
+    private Plot plot;
 
     public Material() {
-       trama = Trama.LISO;
+       plot = Plot.SMOOTH;
     }
 
-    public boolean esValidoPara(Tipo tipo) {
-        return tela.esConsistentePara(tipo);
+    public boolean isValidFor(Type type) {
+        return cloth.isConsistentFor(type);
     }
 
-    public List<Color> getColores() {
-        return colores;
+    public List<Color> getColors() {
+        return colors;
     }
 
-    public Tela getTela() {
-        return tela;
+    public Cloth getCloth() {
+        return cloth;
     }
 
-    public Trama getTrama() {
-        return trama;
+    public Plot getPlot() {
+        return plot;
     }
 
-    public void setColores(List<Color> colores) {
-        this.colores = colores;
+    public void setColors(List<Color> colors) {
+        this.colors = colors;
     }
 
-    public void setTela(Tela tela) {
-        this.tela = tela;
+    public void setCloth(Cloth cloth) {
+        this.cloth = cloth;
     }
 
-    public void setTrama(Trama trama) {
-        this.trama = trama;
+    public void setPlot(Plot plot) {
+        this.plot = plot;
     }
 }

@@ -1,3 +1,0 @@
-public enum Trama {
-    LISO, RAYADO, CON_LUNARES, A_CUADROS, CON_ESTAMPADO
-}
