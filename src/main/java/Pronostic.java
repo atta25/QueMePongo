@@ -1,11 +1,11 @@
 public class Pronostic {
-    private WeatherProviderAdapter weatherProviderAdapter;
+    private WeatherProvider weatherProvider;
 
-    public Pronostic(WeatherProviderAdapter weatherProviderAdapter) {
-        this.weatherProviderAdapter = weatherProviderAdapter;
+    public Pronostic(WeatherProvider weatherProvider) {
+        this.weatherProvider = weatherProvider;
     }
 
     public Double getTemperature(String city) {
-        return weatherProviderAdapter.getWeather(city);
+        return weatherProvider.getWeather(city);
     }
 }

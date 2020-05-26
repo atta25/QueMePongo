@@ -149,9 +149,9 @@ public class Tests {
 
         Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trouser, shoes));
 
-        AccuProviderAdapter accuProviderAdapterMock = mock(AccuProviderAdapter.class);
-        when(accuProviderAdapterMock.getWeather("BsAs")).thenReturn(24.0);
-        Pronostic pronostic = new Pronostic(accuProviderAdapterMock);
+        AccuProvider accuProviderMock = mock(AccuProvider.class);
+        when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
+        Pronostic pronostic = new Pronostic(accuProviderMock);
         Double temperature = pronostic.getTemperature("BsAs");
 
         AttireGenerator generator = new AttireGenerator();

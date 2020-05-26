@@ -1,7 +1,7 @@
 import API.AccuWeatherAPI;
 import java.util.Map;
 
-public class AccuProviderAdapter implements WeatherProviderAdapter {
+public class AccuProvider implements WeatherProvider {
     @Override
     public Double getWeather(String city) {
         AccuWeatherAPI accuWeatherAPI = new AccuWeatherAPI();
