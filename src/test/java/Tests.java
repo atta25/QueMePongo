@@ -57,26 +57,22 @@ public class Tests {
         Garment sneakers = new GarmentBuilder().setType(Type.SNEAKER).setMaterial(sneakersMaterial).build();
 
         Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trousers, shoes, sneakers));
+        Wardrobe wardrobe = new Wardrobe(garments);
         AccuProvider accuProviderMock = mock(AccuProvider.class);
         when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
         AttireGenerator generator = new AttireGenerator(accuProviderMock);
 
-        Set<Attire> attires = generator.getSuggestions(garments);
+        Set<Attire> attires = generator.getSuggestions(wardrobe);
 
-        List<Attire> attiresList = Lists.newArrayList(attires);
-        assertEquals(2, attiresList.size());
-        List<Garment> firstSetOfClothes = Lists.newArrayList(attiresList.get(0).getGarments());
-        assertEquals(3, firstSetOfClothes.size());
-        assertTrue(firstSetOfClothes.contains(shirt));
-        assertTrue(firstSetOfClothes.contains(trousers));
-        assertTrue((firstSetOfClothes.contains(shoes) && !firstSetOfClothes.contains(sneakers)) ||
-                            (firstSetOfClothes.contains(sneakers) && !firstSetOfClothes.contains(shoes)));
-        List<Garment> secondSetOfClothes = Lists.newArrayList(attiresList.get(1).getGarments());
-        assertEquals(3, firstSetOfClothes.size());
-        assertTrue(secondSetOfClothes.contains(shirt));
-        assertTrue(secondSetOfClothes.contains(trousers));
-        assertTrue((secondSetOfClothes.contains(shoes) && !secondSetOfClothes.contains(sneakers)) ||
-                (secondSetOfClothes.contains(sneakers) && !secondSetOfClothes.contains(shoes)));
+        assertEquals(2, attires.size());
+
+        Set<Garment> firstSetOfGarments = attires.iterator().next().getGarments();
+        assertEquals(3, firstSetOfGarments.size());
+        assertTrue(wardrobe.containsAll(firstSetOfGarments));
+
+        Set<Garment> secondSetOfGarments = attires.iterator().next().getGarments();
+        assertEquals(3, secondSetOfGarments.size());
+        assertTrue(wardrobe.containsAll(secondSetOfGarments));
     }
 
     @Test
@@ -90,11 +86,12 @@ public class Tests {
         Material shoesMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
         Garment shoes = new GarmentBuilder().setType(Type.SHOE).setMaterial(shoesMaterial).build();
         Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trousers, shoes));
+        Wardrobe wardrobe = new Wardrobe(garments);
         AccuProvider accuProviderMock = mock(AccuProvider.class);
         when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
         AttireGenerator generator = new AttireGenerator(accuProviderMock);
 
-        Set<Attire> attires = generator.getSuggestions(garments);
+        Set<Attire> attires = generator.getSuggestions(wardrobe);
 
         List<Attire> attiresList = Lists.newArrayList(attires);
         assertEquals(1, attiresList.size());

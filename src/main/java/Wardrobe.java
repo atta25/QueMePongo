@@ -10,4 +10,8 @@ public class Wardrobe {
     public Set<Garment> getGarments() {
         return garments;
     }
+
+    public Boolean containsAll(Set<Garment> garments) {
+        return this.garments.containsAll(garments);
+    }
 }

@@ -13,9 +13,9 @@ public class AttireGenerator {
         this.weatherProvider = weatherProvider;
     }
 
-    public Set<Attire> getSuggestions(Set<Garment> garments) {
+    public Set<Attire> getSuggestions(Wardrobe wardrobe) {
         Double currentTemperature = weatherProvider.getWeather("BsAs");
-        return Sets.powerSet(garments).stream().filter(garmentsSet -> isValidAttire(garmentsSet, currentTemperature)).map(Attire::new).collect(Collectors.toSet());
+        return Sets.powerSet(wardrobe.getGarments()).stream().filter(garments -> isValidAttire(garments, currentTemperature)).map(Attire::new).collect(Collectors.toSet());
     }
 
     private Boolean isValidAttire(Set<Garment> garments, Double currentTemperature) {
