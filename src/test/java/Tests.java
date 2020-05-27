@@ -57,27 +57,6 @@ public class Tests {
         assertEquals(shoes, uniform.getFootwear());
     }
 
-    @Test(expected = BuildUniformException.class)
-    public void whenTheUniformDoesNotHaveTheMandatoryCategoriesShouldThrowAnException() {
-        GarmentBuilder shirtGarmentBuilder = new GarmentBuilder();
-        shirtGarmentBuilder.setType(Type.SHIRT);
-        Material shirtMaterial = new Material();
-        shirtMaterial.setColors(Collections.singletonList(Color.BLACK));
-        shirtMaterial.setCloth(Cloth.COTTON);
-        shirtGarmentBuilder.setMaterial(shirtMaterial);
-        Garment shirt = shirtGarmentBuilder.build();
-
-        GarmentBuilder trouserGarmentBuilder = new GarmentBuilder();
-        trouserGarmentBuilder.setType(Type.TROUSER);
-        Material trouserMaterial = new Material();
-        trouserMaterial.setColors(Collections.singletonList(Color.BLACK));
-        trouserMaterial.setCloth(Cloth.LEATHER);
-        trouserGarmentBuilder.setMaterial(trouserMaterial);
-        Garment trouser = trouserGarmentBuilder.build();
-
-        new Uniform(shirt, shirt, trouser);
-    }
-
     @Test
     public void whenThereAreACoupleOfCombinationsShouldHaveACoupleOfSuggestions() {
         GarmentBuilder shirtGarmentBuilder = new GarmentBuilder();
