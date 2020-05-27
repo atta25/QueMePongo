@@ -7,7 +7,14 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class AttireGenerator {
-    public Set<Attire> getSuggestions(Set<Garment> garments, Double currentTemperature) {
+    private WeatherProvider weatherProvider;
+
+    public AttireGenerator(WeatherProvider weatherProvider) {
+        this.weatherProvider = weatherProvider;
+    }
+
+    public Set<Attire> getSuggestions(Set<Garment> garments) {
+        Double currentTemperature = weatherProvider.getWeather("BsAs");
         return Sets.powerSet(garments).stream().filter(garmentsSet -> isValidAttire(garmentsSet, currentTemperature)).map(Attire::new).collect(Collectors.toSet());
     }
 

@@ -106,9 +106,11 @@ public class Tests {
         Garment sneakers = sneakersGarmentBuilder.setType(Type.SNEAKER).setMaterial(sneakersMaterial).build();
 
         Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trouser, shoes, sneakers));
+        AccuProvider accuProviderMock = mock(AccuProvider.class);
+        when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
+        AttireGenerator generator = new AttireGenerator(accuProviderMock);
 
-        AttireGenerator generator = new AttireGenerator();
-        Set<Attire> attires = generator.getSuggestions(garments, 24.0);
+        Set<Attire> attires = generator.getSuggestions(garments);
 
         List<Attire> attiresList = Lists.newArrayList(attires);
         assertEquals(2, attiresList.size());
@@ -146,16 +148,13 @@ public class Tests {
         shoesMaterial.setColors(Collections.singletonList(Color.BLACK));
         shoesMaterial.setCloth(Cloth.LEATHER);
         Garment shoes = shoesGarmentBuilder.setType(Type.SHOE).setMaterial(shoesMaterial).build();
-
         Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trouser, shoes));
-
         AccuProvider accuProviderMock = mock(AccuProvider.class);
         when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
-        Pronostic pronostic = new Pronostic(accuProviderMock);
-        Double temperature = pronostic.getTemperature("BsAs");
+        AttireGenerator generator = new AttireGenerator(accuProviderMock);
 
-        AttireGenerator generator = new AttireGenerator();
-        Set<Attire> attires = generator.getSuggestions(garments, temperature);
+        Set<Attire> attires = generator.getSuggestions(garments);
+
         List<Attire> attiresList = Lists.newArrayList(attires);
         assertEquals(1, attiresList.size());
     }
