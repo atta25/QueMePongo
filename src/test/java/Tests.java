@@ -58,9 +58,9 @@ public class Tests {
 
         Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trousers, shoes, sneakers));
         Wardrobe wardrobe = new Wardrobe(garments);
-        AccuProvider accuProviderMock = mock(AccuProvider.class);
-        when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
-        AttireGenerator generator = new AttireGenerator(accuProviderMock);
+        WeatherProvider weatherProviderMock = mock(WeatherProvider.class);
+        when(weatherProviderMock.getWeather("BsAs")).thenReturn(24.0);
+        AttireGenerator generator = new AttireGenerator(weatherProviderMock);
 
         Set<Attire> attires = generator.getSuggestions(wardrobe);
 
@@ -76,7 +76,7 @@ public class Tests {
     }
 
     @Test
-    public void mockAccuProviderResponse() {
+    public void mockProviderResponse() {
         Material material = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
         Garment shirt = new GarmentBuilder().setType(Type.SHIRT).setMaterial(material).build();
 
@@ -87,9 +87,9 @@ public class Tests {
         Garment shoes = new GarmentBuilder().setType(Type.SHOE).setMaterial(shoesMaterial).build();
         Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trousers, shoes));
         Wardrobe wardrobe = new Wardrobe(garments);
-        AccuProvider accuProviderMock = mock(AccuProvider.class);
-        when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
-        AttireGenerator generator = new AttireGenerator(accuProviderMock);
+        WeatherProvider weatherProviderMock = mock(WeatherProvider.class);
+        when(weatherProviderMock.getWeather("BsAs")).thenReturn(24.0);
+        AttireGenerator generator = new AttireGenerator(weatherProviderMock);
 
         Set<Attire> attires = generator.getSuggestions(wardrobe);
 
