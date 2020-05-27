@@ -2,12 +2,18 @@ import java.util.List;
 import java.awt.*;
 
 public class Material {
-    private List<Color> colors;
     private Cloth cloth;
     private Plot plot;
+    private List<Color> colors;
 
-    public Material() {
-       plot = Plot.SMOOTH;
+    public Material(Cloth cloth, Plot plot, List<Color> colors) {
+        this.cloth = cloth;
+        this.plot = plot;
+        this.colors = colors;
+    }
+
+    public Material(Cloth cloth, List<Color> colors) {
+        this(cloth, Plot.SMOOTH, colors);
     }
 
     public boolean isValidFor(Type type) {

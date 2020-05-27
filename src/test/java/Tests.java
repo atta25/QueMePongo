@@ -10,81 +10,53 @@ import static org.mockito.Mockito.when;
 public class Tests {
     @Test
     public void buildGarment() {
-        GarmentBuilder garmentBuilder = new GarmentBuilder();
-        Material material = new Material();
-        material.setColors(Collections.singletonList(Color.BLACK));
-        material.setCloth(Cloth.COTTON);
-        Garment garment = garmentBuilder.setType(Type.SHIRT).setMaterial(material).build();
+        Material material = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
+        Garment garment = new GarmentBuilder().setType(Type.SHIRT).setMaterial(material).build();
 
         assertEquals(Type.SHIRT, garment.getType());
-        assertTrue(garment.getMaterial().getColors().contains(Color.BLACK));
         assertEquals(Cloth.COTTON, garment.getMaterial().getCloth());
         assertEquals(Plot.SMOOTH, garment.getMaterial().getPlot());
+        assertTrue(garment.getMaterial().getColors().contains(Color.BLACK));
     }
 
     @Test(expected = BuildGarmentException.class)
     public void whenTypeAndClothAreInconsistentShouldThrowAnException() {
-        GarmentBuilder builder = new GarmentBuilder();
-        Material material = new Material();
-        material.setColors(Collections.singletonList(Color.BLACK));
-        material.setCloth(Cloth.LEATHER);
-        builder.setType(Type.SHIRT).setMaterial(material).build();
+        Material material = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        new GarmentBuilder().setType(Type.SHIRT).setMaterial(material).build();
     }
 
     @Test
     public void buildUniform() {
-        GarmentBuilder shirtGarmentBuilder = new GarmentBuilder();
-        Material shirtMaterial = new Material();
-        shirtMaterial.setColors(Collections.singletonList(Color.BLACK));
-        shirtMaterial.setCloth(Cloth.COTTON);
-        Garment shirt = shirtGarmentBuilder.setType(Type.SHIRT).setMaterial(shirtMaterial).build();
+        Material shirtMaterial = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
+        Garment shirt = new GarmentBuilder().setType(Type.SHIRT).setMaterial(shirtMaterial).build();
 
-        GarmentBuilder trouserGarmentBuilder = new GarmentBuilder();
-        Material trouserMaterial = new Material();
-        trouserMaterial.setColors(Collections.singletonList(Color.BLACK));
-        trouserMaterial.setCloth(Cloth.LEATHER);
-        Garment trouser = trouserGarmentBuilder.setType(Type.TROUSER).setMaterial(trouserMaterial).build();
+        Material trousersMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        Garment trousers = new GarmentBuilder().setType(Type.TROUSERS).setMaterial(trousersMaterial).build();
 
-        GarmentBuilder shoesGarmentBuilder = new GarmentBuilder();
-        Material shoesMaterial = new Material();
-        shoesMaterial.setColors(Collections.singletonList(Color.BLACK));
-        shoesMaterial.setCloth(Cloth.LEATHER);
-        Garment shoes = shoesGarmentBuilder.setType(Type.SHOE).setMaterial(shoesMaterial).build();
+        Material shoesMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        Garment shoes = new GarmentBuilder().setType(Type.SHOE).setMaterial(shoesMaterial).build();
 
-        Uniform uniform = new Uniform(shirt, trouser, shoes);
+        Uniform uniform = new Uniform(shirt, trousers, shoes);
         assertEquals(shirt, uniform.getUpperGarment());
-        assertEquals(trouser, uniform.getLowerGarment());
+        assertEquals(trousers, uniform.getLowerGarment());
         assertEquals(shoes, uniform.getFootwear());
     }
 
     @Test
     public void whenThereAreACoupleOfCombinationsShouldHaveACoupleOfSuggestions() {
-        GarmentBuilder shirtGarmentBuilder = new GarmentBuilder();
-        Material material = new Material();
-        material.setColors(Collections.singletonList(Color.BLACK));
-        material.setCloth(Cloth.COTTON);
-        material.setPlot(Plot.SMOOTH);
-        Garment shirt = shirtGarmentBuilder.setType(Type.SHIRT).setMaterial(material).build();
+        Material material = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
+        Garment shirt = new GarmentBuilder().setType(Type.SHIRT).setMaterial(material).build();
 
-        GarmentBuilder trouserGarmentBuilder = new GarmentBuilder();
-        Material trouserMaterial = new Material();
-        trouserMaterial.setColors(Collections.singletonList(Color.BLACK));
-        trouserMaterial.setCloth(Cloth.LEATHER);
-        Garment trouser = trouserGarmentBuilder.setType(Type.TROUSER).setMaterial(trouserMaterial).build();
+        Material trousersMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        Garment trousers = new GarmentBuilder().setType(Type.TROUSERS).setMaterial(trousersMaterial).build();
 
-        GarmentBuilder shoesGarmentBuilder = new GarmentBuilder();
-        Material shoesMaterial = new Material();
-        shoesMaterial.setColors(Collections.singletonList(Color.BLACK));
-        shoesMaterial.setCloth(Cloth.LEATHER);
-        Garment shoes = shoesGarmentBuilder.setType(Type.SHOE).setMaterial(shoesMaterial).build();
+        Material shoesMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        Garment shoes = new GarmentBuilder().setType(Type.SHOE).setMaterial(shoesMaterial).build();
 
-        GarmentBuilder sneakersGarmentBuilder = new GarmentBuilder();
-        Material sneakersMaterial = new Material();
-        sneakersMaterial.setColors(Collections.singletonList(Color.BLACK));
-        sneakersMaterial.setCloth(Cloth.CANVAS);
-        Garment sneakers = sneakersGarmentBuilder.setType(Type.SNEAKER).setMaterial(sneakersMaterial).build();
+        Material sneakersMaterial = new Material(Cloth.CANVAS, Collections.singletonList(Color.BLACK));
+        Garment sneakers = new GarmentBuilder().setType(Type.SNEAKER).setMaterial(sneakersMaterial).build();
 
-        Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trouser, shoes, sneakers));
+        Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trousers, shoes, sneakers));
         AccuProvider accuProviderMock = mock(AccuProvider.class);
         when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
         AttireGenerator generator = new AttireGenerator(accuProviderMock);
@@ -96,38 +68,28 @@ public class Tests {
         List<Garment> firstSetOfClothes = Lists.newArrayList(attiresList.get(0).getGarments());
         assertEquals(3, firstSetOfClothes.size());
         assertTrue(firstSetOfClothes.contains(shirt));
-        assertTrue(firstSetOfClothes.contains(trouser));
+        assertTrue(firstSetOfClothes.contains(trousers));
         assertTrue((firstSetOfClothes.contains(shoes) && !firstSetOfClothes.contains(sneakers)) ||
                             (firstSetOfClothes.contains(sneakers) && !firstSetOfClothes.contains(shoes)));
         List<Garment> secondSetOfClothes = Lists.newArrayList(attiresList.get(1).getGarments());
         assertEquals(3, firstSetOfClothes.size());
         assertTrue(secondSetOfClothes.contains(shirt));
-        assertTrue(secondSetOfClothes.contains(trouser));
+        assertTrue(secondSetOfClothes.contains(trousers));
         assertTrue((secondSetOfClothes.contains(shoes) && !secondSetOfClothes.contains(sneakers)) ||
                 (secondSetOfClothes.contains(sneakers) && !secondSetOfClothes.contains(shoes)));
     }
 
     @Test
     public void mockAccuProviderResponse() {
-        GarmentBuilder shirtGarmentBuilder = new GarmentBuilder();
-        Material material = new Material();
-        material.setColors(Collections.singletonList(Color.BLACK));
-        material.setCloth(Cloth.COTTON);
-        material.setPlot(Plot.SMOOTH);
-        Garment shirt = shirtGarmentBuilder.setType(Type.SHIRT).setMaterial(material).build();
+        Material material = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
+        Garment shirt = new GarmentBuilder().setType(Type.SHIRT).setMaterial(material).build();
 
-        GarmentBuilder trouserGarmentBuilder = new GarmentBuilder();
-        Material trouserMaterial = new Material();
-        trouserMaterial.setColors(Collections.singletonList(Color.BLACK));
-        trouserMaterial.setCloth(Cloth.LEATHER);
-        Garment trouser = trouserGarmentBuilder.setType(Type.TROUSER).setMaterial(trouserMaterial).build();
+        Material trousersMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        Garment trousers = new GarmentBuilder().setType(Type.TROUSERS).setMaterial(trousersMaterial).build();
 
-        GarmentBuilder shoesGarmentBuilder = new GarmentBuilder();
-        Material shoesMaterial = new Material();
-        shoesMaterial.setColors(Collections.singletonList(Color.BLACK));
-        shoesMaterial.setCloth(Cloth.LEATHER);
-        Garment shoes = shoesGarmentBuilder.setType(Type.SHOE).setMaterial(shoesMaterial).build();
-        Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trouser, shoes));
+        Material shoesMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        Garment shoes = new GarmentBuilder().setType(Type.SHOE).setMaterial(shoesMaterial).build();
+        Set<Garment> garments = new HashSet<>(Arrays.asList(shirt, trousers, shoes));
         AccuProvider accuProviderMock = mock(AccuProvider.class);
         when(accuProviderMock.getWeather("BsAs")).thenReturn(24.0);
         AttireGenerator generator = new AttireGenerator(accuProviderMock);

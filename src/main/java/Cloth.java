@@ -4,11 +4,11 @@ import java.util.List;
 
 public enum Cloth {
     COTTON(Collections.singletonList(Type.SHIRT)),
-    LEATHER(Arrays.asList(Type.JACKET, Type.SHOE, Type.TROUSER)),
+    LEATHER(Arrays.asList(Type.JACKET, Type.SHOE, Type.TROUSERS)),
     SILK(Arrays.asList(Type.SHIRT, Type.TSHIRT)),
     PIQUE(Collections.singletonList(Type.CHOMBA)),
     CANVAS(Collections.singletonList(Type.SNEAKER)),
-    ACETATE(Collections.singletonList(Type.TROUSER));
+    ACETATE(Collections.singletonList(Type.TROUSERS));
 
     private final List<Type> supportedTypes;
 

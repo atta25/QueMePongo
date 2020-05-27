@@ -23,7 +23,7 @@ public enum Type {
             return currentTemperature >= 24.0;
         }
     },
-    TROUSER(Category.LOWER) {
+    TROUSERS(Category.LOWER) {
         @Override
         protected Boolean isSuitable(Double currentTemperature) {
             return currentTemperature <= 30.0;
