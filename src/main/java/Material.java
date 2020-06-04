@@ -17,7 +17,7 @@ public class Material {
     }
 
     public boolean isValidFor(Type type) {
-        return cloth.isConsistentFor(type);
+        return cloth.isConsistentForTheType(type);
     }
 
     public List<Color> getColors() {

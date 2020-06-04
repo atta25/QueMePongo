@@ -1,3 +1,5 @@
+import exception.GarmentNotValidException;
+
 public class GarmentBuilder {
     private Type type;
     private Material material;
@@ -13,12 +15,12 @@ public class GarmentBuilder {
     }
 
     public Garment build() {
-        if (type == null) throw new BuildGarmentException("El tipo de la prenda no fue especificado");
+        if (type == null) throw new GarmentNotValidException("The type of the garment was not specified");
 
         if (material.isValidFor(type)) {
             return new Garment(type, material);
         } else {
-            throw new BuildGarmentException("El tipo y la tela son inconsistentes");
+            throw new GarmentNotValidException("Type and fabric are inconsistent");
         }
     }
 }
