@@ -12,6 +12,11 @@ public class AddGarment implements Modification {
         user.addGarmentToWardrobe(wardrobe, garment);
     }
 
+    @Override
+    public void undo(User user) {
+        user.removeGarmentToWardrobe(wardrobe, garment);
+    }
+
     public RemoveGarment convertToRemoveGarment() {
         return new RemoveGarment(wardrobe, garment);
     }

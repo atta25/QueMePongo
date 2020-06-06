@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class User {
     private Set<Wardrobe> wardrobes;
@@ -46,15 +45,7 @@ public class User {
     }
 
     public void undoAcceptedModifications() {
-        Set<Modification> acceptedModifications = executeModifications.stream()
-                    .filter(AddGarment.class::isInstance)
-                    .collect(Collectors.toSet());
-
-        Set<RemoveGarment> modificationsToRemoveGarments = acceptedModifications.stream()
-                    .map(m -> ((AddGarment) m).convertToRemoveGarment())
-                    .collect(Collectors.toSet());
-
-        modificationsToRemoveGarments.forEach(modificationsToRemove -> modificationsToRemove.apply(this));
-        executeModifications.removeAll(acceptedModifications);
+        executeModifications.forEach(executeModification -> executeModification.undo(this));
+        executeModifications.clear();
     }
 }
