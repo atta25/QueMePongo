@@ -1,3 +1,6 @@
+import java.util.List;
+
 public interface WeatherProvider {
-    Double getWeather(String City);
+    Double getWeather(String city);
+    List<String> getCurrentAlerts(String city);
 }

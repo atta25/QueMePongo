@@ -8,7 +8,10 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class Tests {
+public class BuilderWardrobesTest {
+    private static final String MAIL1 = "jc@gmail.com";
+    private static final String MAIL2 = "jk@gmail.com";
+
     @Test
     public void buildGarment() {
         Material material = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
@@ -44,18 +47,9 @@ public class Tests {
 
     @Test
     public void whenThereAreACoupleOfCombinationsShouldHaveACoupleOfSuggestions() {
-        Material material = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
-        Garment shirt = new GarmentBuilder().setType(Type.SHIRT).setMaterial(material).build();
-        Material trousersMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
-        Garment trousers = new GarmentBuilder().setType(Type.TROUSERS).setMaterial(trousersMaterial).build();
-        Material shoesMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
-        Garment shoes = new GarmentBuilder().setType(Type.SHOE).setMaterial(shoesMaterial).build();
+        Wardrobe wardrobe = this.getWardrobeByDefault();
         Material sneakersMaterial = new Material(Cloth.CANVAS, Collections.singletonList(Color.BLACK));
         Garment sneakers = new GarmentBuilder().setType(Type.SNEAKER).setMaterial(sneakersMaterial).build();
-        Wardrobe wardrobe = new Wardrobe(Criteria.INFORMAL_CLOTHES);
-        wardrobe.addGarment(shirt);
-        wardrobe.addGarment(trousers);
-        wardrobe.addGarment(shoes);
         wardrobe.addGarment(sneakers);
         WeatherProvider weatherProviderMock = mock(WeatherProvider.class);
         when(weatherProviderMock.getWeather("BsAs")).thenReturn(24.0);
@@ -76,16 +70,7 @@ public class Tests {
 
     @Test
     public void mockProviderResponse() {
-        Material material = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
-        Garment shirt = new GarmentBuilder().setType(Type.SHIRT).setMaterial(material).build();
-        Material trousersMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
-        Garment trousers = new GarmentBuilder().setType(Type.TROUSERS).setMaterial(trousersMaterial).build();
-        Material shoesMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
-        Garment shoes = new GarmentBuilder().setType(Type.SHOE).setMaterial(shoesMaterial).build();
-        Wardrobe wardrobe = new Wardrobe(Criteria.INFORMAL_CLOTHES);
-        wardrobe.addGarment(shirt);
-        wardrobe.addGarment(trousers);
-        wardrobe.addGarment(shoes);
+        Wardrobe wardrobe = this.getWardrobeByDefault();
         WeatherProvider weatherProviderMock = mock(WeatherProvider.class);
         when(weatherProviderMock.getWeather("BsAs")).thenReturn(24.0);
         AttireGenerator generator = new AttireGenerator(weatherProviderMock);
@@ -110,9 +95,9 @@ public class Tests {
         Material trousersMaterial = new Material(Cloth.JEAN, Collections.singletonList(Color.BLUE));
         Garment trousers = new GarmentBuilder().setType(Type.TROUSERS).setMaterial(trousersMaterial).build();
         wardrobe.addGarment(trousers);
-        User user = new User();
+        User user = new User(MAIL1);
         user.addWardrobe(wardrobe);
-        User otherUser = new User();
+        User otherUser = new User(MAIL2);
 
         wardrobe.shareWith(otherUser);
 
@@ -125,7 +110,7 @@ public class Tests {
         Material trousersMaterial = new Material(Cloth.JEAN, Collections.singletonList(Color.BLUE));
         Garment trousers = new GarmentBuilder().setType(Type.TROUSERS).setMaterial(trousersMaterial).build();
         wardrobe.addGarment(trousers);
-        User user = new User();
+        User user = new User(MAIL1);
         user.addWardrobe(wardrobe);
         AddGarment addGarment = new AddGarment(wardrobe, trousers);
         RemoveGarment removeGarment = new RemoveGarment(wardrobe, trousers);
@@ -136,5 +121,20 @@ public class Tests {
         user.undoAcceptedModifications();
 
         assertTrue(wardrobe.getGarments().isEmpty());
+    }
+
+    private Wardrobe getWardrobeByDefault() {
+        Material material = new Material(Cloth.COTTON, Collections.singletonList(Color.BLACK));
+        Garment shirt = new GarmentBuilder().setType(Type.SHIRT).setMaterial(material).build();
+        Material trousersMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        Garment trousers = new GarmentBuilder().setType(Type.TROUSERS).setMaterial(trousersMaterial).build();
+        Material shoesMaterial = new Material(Cloth.LEATHER, Collections.singletonList(Color.BLACK));
+        Garment shoes = new GarmentBuilder().setType(Type.SHOE).setMaterial(shoesMaterial).build();
+        Wardrobe wardrobe = new Wardrobe(Criteria.INFORMAL_CLOTHES);
+        wardrobe.addGarment(shirt);
+        wardrobe.addGarment(trousers);
+        wardrobe.addGarment(shoes);
+
+        return wardrobe;
     }
 }

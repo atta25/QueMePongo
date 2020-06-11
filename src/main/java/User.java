@@ -1,17 +1,19 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class User {
     private Set<Wardrobe> wardrobes;
     private List<Modification> pendingModifications;
     private List<Modification> executeModifications;
+    private Set<Attire> dailySuggestions;
+    private String emailAddress;
 
-    public User() {
+    public User(String emailAddress) {
         this.wardrobes = new HashSet<>();
+        this.dailySuggestions = new HashSet<>();
         this.pendingModifications = new ArrayList<>();
         this.executeModifications = new ArrayList<>();
+        this.emailAddress = emailAddress;
     }
 
     public Set<Wardrobe> getWardrobes() {
@@ -32,8 +34,8 @@ public class User {
 
     public void executeModification(Modification modification) {
         modification.apply(this);
-        pendingModifications.remove(modification);
-        executeModifications.add(modification);
+        this.pendingModifications.remove(modification);
+        this.executeModifications.add(modification);
     }
 
     public void addGarmentToWardrobe(Wardrobe wardrobe, Garment garment) {
@@ -45,7 +47,17 @@ public class User {
     }
 
     public void undoAcceptedModifications() {
-        executeModifications.forEach(executeModification -> executeModification.undo(this));
-        executeModifications.clear();
+        this.executeModifications.forEach(executeModification -> executeModification.undo(this));
+        this.executeModifications.clear();
+    }
+
+    public void calculate() {
+        AccuProvider accuProvider = new AccuProvider();
+        AttireGenerator attireGenerator = new AttireGenerator(accuProvider);
+        dailySuggestions = wardrobes.stream().map(attireGenerator::getSuggestions).flatMap(Collection::stream).collect(Collectors.toSet());
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
     }
 }
