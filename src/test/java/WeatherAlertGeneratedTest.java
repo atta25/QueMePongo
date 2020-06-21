@@ -1,3 +1,7 @@
+import domain.User;
+import observer.NotificatorMail;
+import observer.NotificatorText;
+import observer.Recommendation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -5,8 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import repository.UserRepository;
 import service.MailSender;
 import service.NotificationService;
+import weather.AccuProvider;
+import weather.Weather;
 import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -16,8 +23,6 @@ public class WeatherAlertGeneratedTest {
     @Mock
     private Recommendation recommendation;
     @Mock
-    private WeatherProvider weatherProvider;
-    @Mock
     private NotificationService notificationService;
     @Mock
     private MailSender mailSender;
@@ -25,35 +30,26 @@ public class WeatherAlertGeneratedTest {
     private NotificatorText notificatorText;
     @InjectMocks
     private NotificatorMail notificatorMail;
-    private Calculator calculator;
-    @Mock
     private User user;
-    @Mock
-    private User otherUser;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
+        user = new User("jk@gmail.com");
     }
 
     @Test
     public void executeObserversWhenWeatherAlertWasGenerated() {
-        calculator = new Calculator();
-        UserList userList = new UserList();
-        userList.addUser(user);
-        userList.addUser(otherUser);
-        userList.addObserver(notificatorText);
-        userList.addObserver(notificatorMail);
-        userList.addObserver(calculator);
-        when(notificatorText.getMessage()).thenReturn(anyString());
-        when(notificatorMail.getMessage()).thenReturn(anyString());
+        UserRepository userRepository = UserRepository.getInstance();
+        userRepository.addUser(user);
+        user.addObserver(notificatorText);
+        user.addObserver(notificatorMail);
 
-        userList.weatherAlertWasGenerated();
+        Weather weather = new Weather(new AccuProvider());
+        weather.updateAlerts("BsAs");
 
-        verify(notificationService, times(2)).notify(anyString());
-        verify(mailSender, times(2)).send(anyString(), anyString());
-        verify(user, times(1)).calculate();
-        verify(otherUser, times(1)).calculate();
+        verify(notificationService, times(1)).notify(anyString());
+        verify(mailSender, times(1)).send(anyString(), anyString());
     }
 
     @Test

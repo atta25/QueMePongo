@@ -1,6 +1,11 @@
+import builder.GarmentBuilder;
 import com.google.common.collect.Lists;
+import command.AddGarment;
+import command.RemoveGarment;
+import domain.*;
 import exception.GarmentNotValidException;
 import org.junit.Test;
+import weather.WeatherProvider;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
